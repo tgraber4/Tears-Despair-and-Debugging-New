@@ -1,9 +1,12 @@
 package hw4.main;
 
+import hw4.maze.classes.Grid;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Grid grid = new Grid();
+		grid.printGrid();
 
 	}
 
