@@ -1,5 +1,6 @@
 package hw4.maze.classes;
 
+import hw4.player.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -148,67 +149,27 @@ public class Grid {
 	}
 	
 	/**
-	 * Testing function
+	 * Prints the grid out with E being the exit, S being a Space, and A being the Agent
+	 * @param player The player or the Agent shown with A
 	 */
-	public void printGrid() {
-		int rowCounter = 0;
-		int rowSize = this.getRows().size();
+	public void printGrid(Player player) {
+		
+		Row playerRow = player.getCurrentRow();
+		Cell playerCell = player.getCurrentCell();
+		
 		for (Row row : this.getRows()) {
-			String line1 = "";
-			String line2 = "";
-			String line3 = "";
-			int cellCounter = 0;
-			int cellSize = row.getCells().size();
+			String line = "";
 			for (Cell cell : row.getCells()) {
-				line1 += "#";
-				if (cell.getUp().name() == "WALL") {
-					line1 += "#";
+				if (row == playerRow && cell == playerCell) {
+					line += "A";
+				} else if (cell.getUp().name() == "EXIT" || cell.getDown().name() == "EXIT" || cell.getRight().name() == "EXIT" || cell.getLeft().name() == "EXIT") {
+					line += "E";
 				} else {
-					line1 += " ";
+					line += "S";
 				}
-				
-				if (cell.getLeft().name() == "WALL") {
-					line2 += "#";
-				} else {
-					line2 += " ";
-				}
-				
-				if (cell.getUp().name() == "EXIT" || cell.getDown().name() == "EXIT" || cell.getRight().name() == "EXIT" || cell.getLeft().name() == "EXIT") {
-					line2 += "E";
-				} else {
-					line2 += "A";
-				}
-				
-				// end of row
-				if ((cellCounter + 1) == cellSize) {
-					line1 += "#";
-					if (cell.getRight().name() == "WALL") {
-						line2 += "#";
-					} else {
-						line2 += " ";
-					}
-				}
-				
-				// last row in grid
-				if ((rowCounter + 1) == rowSize) {
-					line3 += "#";
-					if (cell.getDown().name() == "WALL") {
-						line3 += "#";
-					} else {
-						line3 += " ";
-					}
-					if ((cellCounter + 1) == cellSize) {
-						line3 += "#";
-					}
-				}
-				cellCounter++;
+				line+= " ";
 			}
-			System.out.println(line1);
-			System.out.println(line2);
-			if ((rowCounter + 1) == rowSize) {
-				System.out.println(line3);
-			}
-			rowCounter++;
+			System.out.println(line);
 		}
 	}
 
